@@ -1,1 +1,31 @@
-#testing creating a file
+%matplotlib inline
+import numpy as np
+import pandas as pd
+import pylab as plt
+
+df = pd.read_excel('AirQualityUCI.xlsx')
+
+def is_real_and_finite(x):
+    if not np.isreal(x):
+        return False
+    elif not np.isfinite(x):
+        return False
+    else:
+        return True
+    
+all_data = df[df.columns[0:]].values
+
+print(all_data)
+#numeric_map = df[df.columns[1:]].applymap(is_real_and_finite)
+#real_rows = numeric_map.all(axis = 1).copy().values
+X = np.array(all_data[:, 1:])
+y = np.array(all_data[:, -2]) #what are we looking for???
+y = y.reshape(-1, 1)
+
+data = []
+data = np.array([df['CO_GT'].values,df['PT08_S1_CO'].values,df['NMHC_GT'].values,df['C6H6_GT'].values,df['PT08_S2_NMHC'].values,df['Nox_GT'].values,df['PT08_S3_Nox'].values,df['NO2_GT'].values,df['PT08_S4_NO2'].values,df['PT08_S5_O3'].values,df['T'].values,df['RH'].values,df['AH'].values,df['CO_level'].values])
+#print(data) #all data where each row is a feature
+print(np.shape(data))
+#transpose so it looks like Excel sheet where columns are features
+X = data.T
+print(X)
